@@ -1,0 +1,91 @@
+
+ROOTCFLAGS = `root-config --cflags`
+ROOTLIBS   = `root-config --libs`
+
+#Optimization level
+CXXFLAGS += -O3
+#Other c++ flags
+CXXFLAGS += -g -ansi -std=c++11 -pedantic -Wall -Wextra -Wstrict-aliasing -Wfloat-equal -Wcast-align -Wno-long-long 
+
+%.o : %.cxx
+	$(RM) $@
+	$(CXX) -c $(CXXFLAGS) -o $@ $*.cxx
+
+
+targets = Bicubic Bicubic_1D Credible Credible_1D Credible_1D_both
+
+Bicubic: Bicubic.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Bicubic.o
+Bicubic.o: 
+	$(CXX) -o Bicubic.o $(ROOTCFLAGS) $(CXXFLAGS) -c Bicubic.cxx
+
+
+Bicubic_1D: Bicubic_1D.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Bicubic_1D.o
+Bicubic_1D.o: 
+	$(CXX) -o Bicubic_1D.o $(ROOTCFLAGS) $(CXXFLAGS) -c Bicubic_1D.cxx
+
+
+
+Credible: Credible.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Credible.o
+Credible.o: 
+	$(CXX) -o Credible.o $(ROOTCFLAGS) $(CXXFLAGS) -c Credible.cxx
+
+Credible_both: Credible_both.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Credible_both.o
+Credible_both.o: 
+	$(CXX) -o Credible_both.o $(ROOTCFLAGS) $(CXXFLAGS) -c Credible_both.cxx
+
+
+
+Credible_1D: Credible_1D.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Credible_1D.o
+Credible_1D.o: 
+	$(CXX) -o Credible_1D.o $(ROOTCFLAGS) $(CXXFLAGS) -c Credible_1D.cxx
+
+Credible_1D_both: Credible_1D_both.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Credible_1D_both.o
+Credible_1D_both.o: 
+	$(CXX) -o Credible_1D_both.o $(ROOTCFLAGS) $(CXXFLAGS) -c Credible_1D_both.cxx
+
+
+Credible_Hierarchy: Credible_Hierarchy.o $(libMF)
+	$(RM) $@
+	$(CXX) -o $@ $(CXXFLAGS)  -L. $^ $(ROOTLIBS) $(PROB3PP_LIBS)
+
+.PHONY: Credible_Hierarchy.o
+Credible_Hierarchy.o: 
+	$(CXX) -o Credible_Hierarchy.o $(ROOTCFLAGS) $(CXXFLAGS) -c Credible_Hierarchy.cxx
+
+
+
+
+.PHONY: all
+all: $(targets)
+
+.PHONY: clean
+clean:
+	$(RM) $(targets) *.o
+
+emptyrule:: all
+
+
