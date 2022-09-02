@@ -32,7 +32,7 @@ gLogger.info('Job submitter: {}'.format(job_name))
 #list=[2,3,5,6,8,11,12]
 
 #for i in range(len(list)):
-for i in range(200):
+for i in range(20):
 
   j = Job()
   j.setCPUTime(3000)
@@ -53,7 +53,7 @@ for i in range(200):
       writer.write(content)
 
   j.setName('API_%d' % i)
-  j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, main_script, lfn_path+'/Validation_ToyXP_Asimov4_2018_03Aug2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.tar.bz2', lfn_path+'/inputs_Spring2020_0325.gzip'])
+  j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, main_script, lfn_path+'/Validation_ToyXP_AsimovA_2018_16Feb2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.tar.bz2', lfn_path+'/inputs_Spring2020_0325.gzip'])
   j.setOutputSandbox(['bins{:04d}.root'.format(i*1000)])
   #j.setOutputSandbox(['bins{:04d}.root'.format(i*1000), 'subset{:04d}.root'.format(i*1000), 'Syst_1k_t2k-nova_syscorr_{:04d}.root'.format(i*1000)])
   j.setExecutable(test_script)

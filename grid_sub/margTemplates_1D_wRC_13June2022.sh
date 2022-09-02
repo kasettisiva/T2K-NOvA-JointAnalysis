@@ -15,9 +15,9 @@ echo "SINGULARITY_TMPDIR: ${SINGULARITY_TMPDIR} : ${SINGULARITY_BINDPATH}"
 let bin_start="${start_bin}*1000"
 
 #toyxp="Validation_ToyXP_AsimovA_2018_500_Asimovs_01Feb2022.root"
-#toyxp="Validation_ToyXP_AsimovA_2018_16Feb2022.root"
+toyxp="Validation_ToyXP_AsimovA_2018_16Feb2022.root"
 #toyxp="Validation_ToyXP_Asimov0_2018_15July2022.root" #NOvA's best-fit
-toyxp="Validation_ToyXP_Asimov4_2018_03Aug2022.root" #NuFit like
+#toyxp="Validation_ToyXP_Asimov4_2018_03Aug2022.root" #NuFit like
 templates="$(printf "subset%04d.root" "${bin_start}")"
 outbase="$(printf "bins%04d" "${bin_start}")"
 osc_throw="$(printf "Osc_wRC_%04d.root" "${bin_start}")"
@@ -44,7 +44,8 @@ cd $path/P-theta/Minimal
 #ln -sf $path/P-theta/Minimal/NOvA_files/jf_data_asimov0_fake/data_nova2020ana_fake_asimov0.root $path/P-theta/Minimal/NOvA_files/jf_data_asimov0_fake/data.container.root #Asimov0, NOvA best-fit point
 #ln -sf $path/P-theta/Minimal/NOvA_files/jf_data_asimov4_fake/data_nova2020ana_fake_asimov4.root $path/P-theta/Minimal/NOvA_files/jf_data_asimov4_fake/data.container.root #Asimov4, NuFit like
 
-ln -sf data_nova2020ana_fake_asimov4.root $path/P-theta/Minimal/NOvA_files/jf_data_asimov4_fake/data.container.root
+#ln -sf data_nova2020ana_fake_asimov4.root $path/P-theta/Minimal/NOvA_files/jf_data_asimov4_fake/data.container.root
+ln -sf data_nova2020ana_fake_asimov1.root $path/P-theta/Minimal/NOvA_files/jf_data_asimov1_fake/data.container.root
 
 ls -l $path/P-theta/Minimal/NOvA_files/jf_data_asimov4_fake/data.container.root
 
