@@ -10,7 +10,6 @@ import os
 import tarfile
 
 job_name = "p-theta compilation"
-#tar_sourcefolder_fname = "P-theta.gzip"
 tar_sourcefolder_fname = "Packages.gzip"
 tar_archive_script = "untar_script.sh"
 main_script = "main_script.sh"
@@ -27,25 +26,12 @@ with tarfile.open(tar_sourcefolder_fname, "w:gz") as tar:
         for item in input_files:
                 gLogger.info("adding {} as {}".format(item, item))
                 tar.add(item, arcname=item)
-"""
-with open(tar_archive_script, 'w') as stream:
-        stream.write("#!/bin/bash\n")
-        stream.write("echo 'Untar step:'\n")
-        stream.write("ls -atr\n")
-        stream.write("python -c 'import tarfile; tar = tarfile.open(\"Packages.gzip\"); tar.extractall(); tar.close()'\n".format(tar_sourcefolder_fname))
-        stream.write("python -c 'import tarfile; tar = tarfile.open(\"inputs_Spring2020_0325.gzip\"); tar.extractall(); tar.close()'\n".format(tar_sourcefolder_fname))
-        stream.write("python -c 'import tarfile; tar = tarfile.open(\"nova-sl7-novat2k_v4_fixcosmicsrock.tar.bz2\"); tar.extractall(); tar.close()'\n".format(tar_sourcefolder_fname))
-        stream.write("echo 'Untar step done'\n")
-"""
+
 gLogger.info('Job submitter: {}'.format(job_name))
 
-#list=[1,2,3,5,6,7,8,9,11,12]
 #list=[2,3,5,6,8,11,12]
 
-#for i in range(200):
-#for i in range(25):
 #for i in range(len(list)):
-#for i in range(30):
 for i in range(200):
 
   j = Job()
@@ -53,7 +39,6 @@ for i in range(200):
   j.setName(job_name)
   j.setLogLevel('debug')
   j.setDestination(dest)
-  #j.setExecutable(tar_archive_script)
   j.setExecutable(main_script)
   
   lfn_path='LFN:/t2k.org/user/p/pserv.phys.lsu.edu'
@@ -68,15 +53,9 @@ for i in range(200):
       writer.write(content)
 
   j.setName('API_%d' % i)
-  #j.setInputSandbox([tar_sourcefolder_fname, tar_archive_script, main_script, lfn_path+'/'+'subset{:04d}.root'.format(i*100), lfn_path+'/Validation_ToyXP_AsimovA_2018_02May2021.root', lfn_path+'/nova-sl7-novat2k_latest.sif'])
-  #j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, tar_archive_script, main_script, lfn_path+'/Validation_ToyXP_AsimovA_2018_16Feb2022.root', lfn_path+'/P-theta_nova-submodules_gitBranchCommit_Aug2021/MakeTemplates_OA2019_30k_t2k-nova_syscorr_set1_16Feb2022/'+'subset{:04d}.root'.format(i*1000), lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.sif', lfn_path+'/inputs_Spring2020_0325.gzip'])
-  #j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, tar_archive_script, main_script, lfn_path+'/Validation_ToyXP_AsimovA_2018_16Feb2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.sif', lfn_path+'/inputs_Spring2020_0325.gzip'])
-  #j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, tar_archive_script, main_script, lfn_path+'/Validation_ToyXP_Asimov0_2018_15July2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.sif', lfn_path+'/inputs_Spring2020_0325.gzip'])
-  #j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, tar_archive_script, main_script, lfn_path+'/Validation_ToyXP_Asimov4_2018_03Aug2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.tar.bz2', lfn_path+'/inputs_Spring2020_0325.gzip'])
   j.setInputSandbox([lfn_path+'/'+tar_sourcefolder_fname, main_script, lfn_path+'/Validation_ToyXP_Asimov4_2018_03Aug2022.root', lfn_path+'/nova-sl7-novat2k_v4_fixcosmicsrock.tar.bz2', lfn_path+'/inputs_Spring2020_0325.gzip'])
   j.setOutputSandbox(['bins{:04d}.root'.format(i*1000)])
   #j.setOutputSandbox(['bins{:04d}.root'.format(i*1000), 'subset{:04d}.root'.format(i*1000), 'Syst_1k_t2k-nova_syscorr_{:04d}.root'.format(i*1000)])
-  #j.setOutputSandbox(['std.err', 'std.out', 'P-theta_install.gzip', 'bins{:04d}.root'.format(i*100)])
   j.setExecutable(test_script)
   dirac = Dirac()
   jobID = dirac.submitJob(j)
@@ -89,4 +68,3 @@ for i in range(200):
       gLogger.always("Job submitted <{}>: \n{}".format(jobID['JobID'], j._toJDL()))
       gLogger.info("Cleaning up!")
       os.remove(tar_sourcefolder_fname)
-      #os.remove(tar_archive_script)
